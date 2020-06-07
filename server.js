@@ -9,6 +9,10 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 
+const cmd = require('node-cmd');
+const crypto = require('crypto'); 
+const bodyParser = require('body-parser');
+
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
     var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
@@ -23,6 +27,7 @@ if (!process.env.DISABLE_XORIGIN) {
 }
 
 app.use('/public', express.static(process.cwd() + '/public'));
+app.use(bodyParser.json());
 
 app.route('/_api/package.json')
   .get(function(req, res, next) {
@@ -37,6 +42,31 @@ app.route('/')
     .get(function(req, res) {
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
+
+
+const onWebhook = (req, res) => {
+  let hmac = crypto.createHmac('sha1', process.env.SECRET);
+  let sig  = `sha1=${hmac.update(JSON.stringify(req.body)).digest('hex')}`;
+
+  if (req.headers['x-github-event'] === 'push' && sig === req.headers['x-hub-signature']) {
+    cmd.run('chmod 777 ./git.sh'); 
+    
+    cmd.get('./git.sh', (err, data) => {  
+      if (data) {
+        console.log(data);
+      }
+      if (err) {
+        console.log(err);
+      }
+    })
+
+    cmd.run('refresh');
+  }
+
+  return res.sendStatus(200);
+}
+
+app.post('/git', onWebhook);
 
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
