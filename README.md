@@ -1,3 +1,1 @@
-# Get Started!
-
-Add files and start typing 🎉
+# Backend Challenges boilerplate - package.json
