@@ -1,7 +1,7 @@
 {
 	"name": "fcc-learn-npm-package-json",
 	"author": "Marco Caceres",
-	"description": "This is an API and microservices freecodecamp app",
+	"description": "This is an API and microservices freecodecamp app, second test",
 	"dependencies": {
 		"express": "^4.14.0"
 	},
