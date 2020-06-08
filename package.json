@@ -3,6 +3,7 @@
 	"author": "Marco Caceres",
 	"description": "This is an API and microservices freecodecamp app, second test",
 	"license":"MIT",
+	"version": "0.0.1",
 	"keywords": ["freecodecamp","api", "tutorial"],
 	"dependencies": {
 		"express": "^4.14.0"
