@@ -6,8 +6,7 @@
 	"version": "0.0.1",
 	"keywords": ["freecodecamp","api", "tutorial"],
 	"dependencies": {
-		"express": "^4.14.0",
-		"moment":"^2.10.2"
+		"express": "^4.14.0"
 	},
 	"main": "server.js",
 	"scripts": {
